@@ -1,0 +1,80 @@
+<div class="container" fxLayout="column" fxLayoutAlign="start stretch">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/employees']">Employee</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit</li>
+    </ol>
+  </nav>
+  <mat-card>
+    <mat-card-content>
+      <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="save()">
+        <mat-form-field class="full-width">
+          <mat-label>Username</mat-label>
+          <input formControlName="username" matInput placeholder="" value="Sushi">
+          <mat-error *ngIf="form.get('username')?.hasError('required')">username required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>First Name</mat-label>
+          <input formControlName="firstName" matInput placeholder="" value="">
+          <mat-error *ngIf="form.get('firstName')?.hasError('required')">First Name required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastName" matInput placeholder="" value="">
+          <mat-error *ngIf="form.get('lastName')?.hasError('required')">Last Name required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput placeholder="" value="">
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email required</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('pattern')">Format email not correct</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>BirthDate</mat-label>
+          <input formControlName="birthDate" matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('birthDate')?.hasError('required')">BirthDate required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Basic Salary</mat-label>
+          <input type="number" formControlName="basicSalary" matInput placeholder="" value="">
+          <mat-error *ngIf="form.get('basicSalary')?.hasError('required')">Basic Salary required</mat-error>
+          <mat-error *ngIf="form.get('basicSalary')?.hasError('pattern')">First digit for 0 is forbidden</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Group</mat-label>
+          <input formControlName="group" matInput placeholder="" value="">
+          <mat-error *ngIf="form.get('group')?.hasError('required')">Group required</mat-error>
+        </mat-form-field>
+
+        <div class="full-width" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="18px">
+          <label id="example-radio-group-label">Pick your status</label>
+          <mat-radio-group formControlName="status" aria-label="Select an option" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="18px">
+            <mat-radio-button value="single">Single</mat-radio-button>
+            <mat-radio-button value="married">Married</mat-radio-button>
+            <mat-radio-button value="divorced">Divorced</mat-radio-button>
+          </mat-radio-group>
+          <mat-error *ngIf="form.get('status')?.hasError('required')">Status required</mat-error>
+        </div>
+
+        <mat-form-field class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea formControlName="description" matInput placeholder="Ex. It makes me feel..."></textarea>
+          <mat-error *ngIf="form.get('description')?.hasError('required')">Description required</mat-error>
+        </mat-form-field>
+        <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">Save</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

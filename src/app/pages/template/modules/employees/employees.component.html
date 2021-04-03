@@ -1,0 +1,53 @@
+<div class="container" fxLayout="column" fxLayoutAlign="start stretch">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/employees']">Employee</a></li>
+    </ol>
+  </nav>
+  <div class="mat-elevation-z8" class="content" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="18px">
+    <a class="content__add" mat-raised-button [routerLink]="['/employees/add']">Add Employee</a>
+    <table class="content__table" mat-table [dataSource]="dataSource">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="birthDate">
+        <th mat-header-cell *matHeaderCellDef> BirthDate </th>
+        <td mat-cell *matCellDef="let element"> {{ element.birthDate | date:"longDate"}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-button [routerLink]="['/employees/', element.id]">Detail</a>
+          <a mat-flat-button color="accent" [routerLink]="['/employees/edit/', element.id]">Edit</a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator (page)="changePage($event)" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  <br>
+</div>
+
+
