@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AppState } from '../../../store/reducers/index';
+import { logout } from '../../../store/actions/app.actions';
+import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-nav',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.store.dispatch(logout());
+    localStorage.removeItem('user');
+    this.router.navigate(['/']);
   }
 
 }

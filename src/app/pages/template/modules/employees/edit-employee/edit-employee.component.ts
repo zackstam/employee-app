@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Employee } from '../../../../../interfaces/employee';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, fromEvent } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { EmployeeService } from '../../../../../services/employee.service';
 import { AppState } from '../../../../../store/reducers/index';
 import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { Group } from '../../../../../../app/interfaces/group';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
+import { selectLoading } from '../../../../../store/selectors/app.selector';
 
 @Component({
   selector: 'app-edit-employee',
@@ -21,6 +25,10 @@ export class EditEmployeeComponent implements OnInit {
   salaryPattern = '^[0-9]*$';
   isLoading$: Observable<boolean>;
   errorMessage: string | null;
+  max: Date = new Date();
+  groups: Group[];
+  options: Group[];
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -30,8 +38,10 @@ export class EditEmployeeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const employee = 'employee';
-    this.employee = this.route.snapshot.data[employee];
+    this.isLoading$ = this.store.pipe(select(selectLoading));
+    this.employee = this.route.snapshot.data['employee'];
+    this.groups = this.route.snapshot.data['groups'];
+    //create form
     this.form = this.fb.group({
       id: [this.employee.id, Validators.required],
       username: [this.employee.username, Validators.required],
@@ -44,6 +54,20 @@ export class EditEmployeeComponent implements OnInit {
       status: [this.employee.status, Validators.required],
       description: [this.employee.description, Validators.required],
     });
+
+    this.form.get('group').valueChanges
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith(null),
+    ).subscribe((data) => {
+      this.options = data ? this._filter(data) : this.groups;
+    });
+  }
+
+  private _filter(value: string): Group[] {
+    const filterValue = value.toLowerCase();
+    return this.groups.filter((group: Group) => group.name.toLowerCase().includes(filterValue));
   }
 
   save(): void {
@@ -53,8 +77,6 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeService.update(employeeForm)
     .subscribe(() => {
       this.router.navigate(['/employees']);
-    }, error => {
-      this.errorMessage = error;
     })
   }
 

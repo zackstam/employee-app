@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="form" (ngSubmit)="save()">
+      <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput placeholder="" value="">
+      </mat-form-field>
+      <div class="buttons" fxLayout="row" fxLayoutAlign="start start" >
+        <button (click)="cancel()" mat-flat-button type="button">Cancel</button>
+        <button [disabled]="!form.valid  || (isLoading$ | async)" mat-flat-button type="submit" color="primary">Save</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

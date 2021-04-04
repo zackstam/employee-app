@@ -1,9 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { EmployeeService } from '../../../../../services/employee.service';
-import { Employee } from '../../../../../interfaces/employee';
-import { mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-detail-employee',
@@ -11,24 +7,18 @@ import { of } from 'rxjs';
   styleUrls: ['./detail-employee.component.scss']
 })
 export class DetailEmployeeComponent implements OnInit, AfterViewInit {
-  employee: Employee | null;
-  id: number;
   constructor(
-    private route: ActivatedRoute,
-    private employeeService: EmployeeService
-  ) {}
+    public dialogRef: MatDialogRef<DetailEmployeeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
-    this.route.params
-    .pipe(
-      mergeMap((params: Params) => {
-        return this.employeeService.byId(params.id)
-      })
-    ).subscribe(data => this.employee = data)
+  }
 
+  close() {
+    this.dialogRef.close(true);
   }
 
 }

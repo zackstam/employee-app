@@ -22,7 +22,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
-
+import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { GroupResolver } from '../../../../resolvers/groups.resolver';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -32,17 +36,17 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddEmployeeComponent,
+    resolve: {
+      groups: GroupResolver,
+    },
   },
   {
     path: 'edit/:id',
     component: EditEmployeeComponent,
     resolve: {
       employee: EmployeeIdResolver,
+      groups: GroupResolver,
     },
-  },
-  {
-    path: ':id',
-    component: DetailEmployeeComponent,
   },
 ];
 
@@ -67,13 +71,20 @@ const routes: Routes = [
     MatRadioModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatSortModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatIconModule,
   ],
   providers: [
     EmployeeIdResolver,
+    GroupResolver,
     MatDatepickerModule,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'Rp' }
   ],
-  entryComponents: []
+  entryComponents: [
+    DetailEmployeeComponent
+  ]
 })
 export class EmployeesModule { }

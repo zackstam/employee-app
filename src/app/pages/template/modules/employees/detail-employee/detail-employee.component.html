@@ -1,51 +1,48 @@
 <div class="container" fxLayout="column" fxLayoutAlign="start stretch">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a [routerLink]="['/employees']">Employee</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Detail</li>
-    </ol>
-  </nav>
   <h2 class="container__title" mat-dialog-title>Detail Employee</h2>
   <table class="container__table table">
     <tbody>
       <tr>
         <th>First Name</th>
-        <td>{{ employee?.firstName }}</td>
+        <td>{{ data?.firstName }}</td>
       </tr>
       <tr>
         <th>Last Name</th>
-        <td>{{ employee?.lastName }}</td>
+        <td>{{ data?.lastName }}</td>
       </tr>
       <tr>
         <th>Username</th>
-        <td>{{ employee?.username }}</td>
+        <td>{{ data?.username }}</td>
       </tr>
       <tr>
         <th>Email</th>
-        <td>{{ employee?.email }}</td>
+        <td>{{ data?.email }}</td>
       </tr>
       <tr>
         <th>Birth Date</th>
-        <td>{{ employee?.birthDate | date:"longDate" }}</td>
+        <td>{{ data?.birthDate | date:"longDate" }}</td>
       </tr>
       <tr>
         <th>Salary</th>
-        <td>{{ employee?.basicSalary | currency }}</td>
+        <td>{{ data?.basicSalary | currency }}</td>
       </tr>
       <tr>
         <th>Status</th>
-        <td>{{ employee?.status }}</td>
+        <td>{{ data?.status }}</td>
       </tr>
       <tr>
         <th>Group</th>
-        <td>{{ employee?.group }}</td>
+        <td>{{ data?.group }}</td>
       </tr>
       <tr>
         <th>Description</th>
-        <td>{{ employee?.description }}</td>
+        <td>{{ data?.description }}</td>
       </tr>
 
     </tbody>
   </table>
+  <div class="buttons" fxLayout="row" fxLayoutAlign="end end">
+    <button (click)="close()" mat-flat-button>OK</button>
+  </div>
 </div>
 

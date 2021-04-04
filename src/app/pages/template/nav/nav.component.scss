@@ -6,3 +6,12 @@ a {
   display: block;
   white-space: nowrap;
 }
+
+.logout {
+  cursor: pointer;
+  color: blue;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

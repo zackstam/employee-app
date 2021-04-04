@@ -32,6 +32,10 @@ const appReducer = createReducer(
     ...state,
     authenticated: true
   })),
+  on(AuthActions.logout, state => ({
+    ...state,
+    authenticated: false
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

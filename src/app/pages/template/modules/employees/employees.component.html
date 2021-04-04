@@ -4,48 +4,93 @@
       <li class="breadcrumb-item"><a [routerLink]="['/employees']">Employee</a></li>
     </ol>
   </nav>
-  <div class="mat-elevation-z8" class="content" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="18px">
-    <a class="content__add" mat-raised-button [routerLink]="['/employees/add']">Add Employee</a>
-    <table class="content__table" mat-table [dataSource]="dataSource">
+  <div class="content" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="18px">
+    <div class="content__add" fxLayout="row" fxLayoutAlign="end start">
+      <a mat-raised-button color="primary" [routerLink]="['/employees/add']">Add Employee</a>
+    </div>
+    <div class="content__form">
+      <form class="form" [formGroup]="searchForm" (ngSubmit)="search()">
+        <div class="form__fields" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="18px">
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input formControlName="firstName" matInput placeholder="">
+          </mat-form-field>
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef> First Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-      </ng-container>
+          <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input formControlName="lastName" matInput placeholder="">
+          </mat-form-field>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef> Last Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-      </ng-container>
+          <mat-form-field appearance="fill">
+            <mat-label>Group</mat-label>
+            <mat-select formControlName="group">
+              <mat-option [value]="null">-- Select Group --</mat-option>
+              <mat-option [value]="group.name" *ngFor="let group of groups">{{ group.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form__buttons" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="18px">
+          <button [disabled]="
+          !searchForm.controls.firstName.valid &&
+          !searchForm.controls.lastName.valid &&
+          !searchForm.controls.group.valid" type="submit" mat-flat-button color="primary">Search</button>
+          <button mat-flat-button (click)="reset()">Reset</button>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-      </ng-container>
+        </div>
+      </form>
+    </div>
+    <div class="content__table">
+      <table class="table" mat-table matSort [dataSource]="dataSource">
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="birthDate">
-        <th mat-header-cell *matHeaderCellDef> BirthDate </th>
-        <td mat-cell *matCellDef="let element"> {{ element.birthDate | date:"longDate"}} </td>
-      </ng-container>
+        <!-- firstName Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header start="asc"> First Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element">
-          <a mat-button [routerLink]="['/employees/', element.id]">Detail</a>
-          <a mat-flat-button color="accent" [routerLink]="['/employees/edit/', element.id]">Edit</a>
-        </td>
-      </ng-container>
+        <!-- lastName Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header start="asc"> Last Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <!-- email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header start="asc"> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
 
-    <mat-paginator (page)="changePage($event)" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <!-- birthDate Column -->
+        <ng-container matColumnDef="birthDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header start="asc"> BirthDate </th>
+          <td mat-cell *matCellDef="let element"> {{ element.birthDate | date:"longDate"}} </td>
+        </ng-container>
+
+        <!-- action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="buttons" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="18px">
+              <button color="primary" mat-icon-button (click)="detail(element)">
+                <span class="material-icons">info</span>
+              </button>
+              <button color="accent" mat-icon-button (click)="edit(element)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button (click)="delete(element)" mat-icon-button color="warn" aria-label="">
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
   <br>
 </div>

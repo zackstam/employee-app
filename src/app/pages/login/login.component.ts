@@ -5,7 +5,7 @@ import { AppState } from '../../store/reducers/index';
 import { login } from '../../store/actions/app.actions';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { selectError, selectLoading } from '../../store/selectors/app.selector';
+import { selectLoading } from '../../store/selectors/app.selector';
 import { Store, select } from '@ngrx/store';
 
 @Component({
@@ -16,6 +16,7 @@ import { Store, select } from '@ngrx/store';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoading$: Observable<boolean>;
+  errorMessage: string;
 
   constructor(
     private authService: AuthService,
@@ -32,11 +33,14 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
+    this.errorMessage = null
     this.authService.login(this.form.value)
     .subscribe(data => {
       if (data.length > 0) {
         this.store.dispatch(login());
         this.router.navigate(['/home']);
+      } else {
+        this.errorMessage = 'Username or Password not Valid'
       }
 
     });

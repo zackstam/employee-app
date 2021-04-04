@@ -7,12 +7,10 @@
   </nav>
   <mat-card>
     <mat-card-content>
-      <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
-
       <form class="form" [formGroup]="form" (ngSubmit)="save()">
         <mat-form-field class="full-width">
           <mat-label>Username</mat-label>
-          <input formControlName="username" matInput placeholder="" value="Sushi">
+          <input formControlName="username" matInput placeholder="" value="">
           <mat-error *ngIf="form.get('username')?.hasError('required')">username required</mat-error>
         </mat-form-field>
 
@@ -38,7 +36,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>BirthDate</mat-label>
-          <input formControlName="birthDate" matInput [matDatepicker]="picker">
+          <input formControlName="birthDate" [max]="max" matInput [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="form.get('birthDate')?.hasError('required')">BirthDate required</mat-error>
@@ -48,13 +46,21 @@
           <mat-label>Basic Salary</mat-label>
           <input type="number" formControlName="basicSalary" matInput placeholder="" value="">
           <mat-error *ngIf="form.get('basicSalary')?.hasError('required')">Basic Salary required</mat-error>
-          <mat-error *ngIf="form.get('basicSalary')?.hasError('pattern')">First digit for 0 is forbidden</mat-error>
-
+          <!-- <mat-error *ngIf="form.get('basicSalary')?.hasError('pattern')">First digit for 0 is forbidden</mat-error> -->
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="example-full-width">
           <mat-label>Group</mat-label>
-          <input formControlName="group" matInput placeholder="" value="">
+          <input formControlName="group" type="text"
+                 placeholder="Pick one"
+                 aria-label="Group"
+                 matInput
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let group of options" [value]="group.name">
+              {{group.name}}
+            </mat-option>
+          </mat-autocomplete>
           <mat-error *ngIf="form.get('group')?.hasError('required')">Group required</mat-error>
         </mat-form-field>
 
@@ -70,10 +76,13 @@
 
         <mat-form-field class="full-width">
           <mat-label>Description</mat-label>
-          <textarea formControlName="description" matInput placeholder="Ex. It makes me feel..."></textarea>
+          <textarea formControlName="description" matInput placeholder="Description"></textarea>
           <mat-error *ngIf="form.get('description')?.hasError('required')">Description required</mat-error>
         </mat-form-field>
-        <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">Save</button>
+        <div class="buttons">
+          <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">Save</button>
+          <a mat-button [routerLink]="['/employees']">Cancel</a>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

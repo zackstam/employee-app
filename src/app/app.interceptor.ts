@@ -17,6 +17,7 @@ export class AppInterceptor implements HttpInterceptor {
         return next.handle(request)
         .pipe(
           catchError((response: HttpErrorResponse) => {
+            console.log(response)
             this.store.dispatch(setError({ error: response.error.message ||  'Server Error' }));
             return throwError(response);
           }),
