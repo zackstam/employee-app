@@ -2,9 +2,25 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
 
+## Requirement
+Angular CLI: 11.0.6
+Node: 10.16.3
+
+## Installing project
+
+Run `npm install`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+
+## Credential to login
+username: 'admin'
+password: 'admin'
+
+username: 'paijo'
+password: 'paijo'
 
 ## Code scaffolding
 
