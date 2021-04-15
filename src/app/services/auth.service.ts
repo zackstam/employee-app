@@ -17,6 +17,7 @@ export class AuthService {
 
     return this.http
       .get<any[]>(this.usersUrl, { params })
+
       .pipe(
         tap((data) => {
           localStorage.setItem('user', JSON.stringify(data))
