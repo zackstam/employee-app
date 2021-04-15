@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
+    loadChildren: () => import('./pages/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: '',
@@ -19,25 +19,26 @@ const routes: Routes = [
     children: [
       {
         path: 'employees',
-        loadChildren: () => import('./pages/template/modules/employees/employees.module').then(m => m.EmployeesModule),
+        loadChildren: () =>
+          import('./pages/template/modules/employees/employees.module').then((m) => m.EmployeesModule),
         canActivate: [AuthGuard],
       },
       {
         path: 'groups',
-        loadChildren: () => import('./pages/template/modules/groups/groups.module').then(m => m.GroupsModule),
+        loadChildren: () => import('./pages/template/modules/groups/groups.module').then((m) => m.GroupsModule),
         canActivate: [AuthGuard],
       },
       {
         path: 'home',
-        loadChildren: () => import('./pages/template/modules/home/home.module').then(m => m.HomeModule),
+        loadChildren: () => import('./pages/template/modules/home/home.module').then((m) => m.HomeModule),
         canActivate: [AuthGuard],
-      }
+      },
     ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

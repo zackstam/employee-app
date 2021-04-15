@@ -8,17 +8,12 @@ import { MatCardModule } from '@angular/material/card';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
   },
 ];
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FlexLayoutModule,
-    MatCardModule
-  ]
+  imports: [CommonModule, RouterModule.forChild(routes), FlexLayoutModule, MatCardModule],
 })
-export class HomeModule { }
+export class HomeModule {}

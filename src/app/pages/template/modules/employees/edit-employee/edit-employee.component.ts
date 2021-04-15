@@ -16,12 +16,12 @@ import { selectLoading } from '../../../../../store/selectors/app.selector';
 @Component({
   selector: 'app-edit-employee',
   templateUrl: './edit-employee.component.html',
-  styleUrls: ['./edit-employee.component.scss']
+  styleUrls: ['./edit-employee.component.scss'],
 })
 export class EditEmployeeComponent implements OnInit {
   employee: Employee;
   form: FormGroup;
-  emailPattern = '^[a-z0-9A-Z._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+  emailPattern = '^[a-z0-9A-Z._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$';
   salaryPattern = '^[0-9]*$';
   isLoading$: Observable<boolean>;
   errorMessage: string | null;
@@ -34,8 +34,8 @@ export class EditEmployeeComponent implements OnInit {
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private store: Store<AppState>,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoading$ = this.store.pipe(select(selectLoading));
@@ -55,14 +55,12 @@ export class EditEmployeeComponent implements OnInit {
       description: [this.employee.description, Validators.required],
     });
 
-    this.form.get('group').valueChanges
-    .pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      startWith(null),
-    ).subscribe((data) => {
-      this.options = data ? this._filter(data) : this.groups;
-    });
+    this.form
+      .get('group')
+      .valueChanges.pipe(debounceTime(500), distinctUntilChanged(), startWith(null))
+      .subscribe((data) => {
+        this.options = data ? this._filter(data) : this.groups;
+      });
   }
 
   private _filter(value: string): Group[] {
@@ -73,11 +71,9 @@ export class EditEmployeeComponent implements OnInit {
   save(): void {
     this.errorMessage = null;
     const employeeForm = this.form.value;
-    employeeForm.birthDate = moment(employeeForm.birthDate).format('YYYY-MM-DD')
-    this.employeeService.update(employeeForm)
-    .subscribe(() => {
+    employeeForm.birthDate = moment(employeeForm.birthDate).format('YYYY-MM-DD');
+    this.employeeService.update(employeeForm).subscribe(() => {
       this.router.navigate(['/employees']);
-    })
+    });
   }
-
 }

@@ -24,11 +24,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthGuard } from './auth.guard.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TemplateComponent,
-    NavComponent,
-  ],
+  declarations: [AppComponent, TemplateComponent, NavComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,19 +42,17 @@ import { AuthGuard } from './auth.guard.service';
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi: true,
-      deps: [Store]
+      deps: [Store],
     },
     AuthGuard,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

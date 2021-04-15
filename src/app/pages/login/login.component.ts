@@ -11,18 +11,14 @@ import { Store, select } from '@ngrx/store';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoading$: Observable<boolean>;
   errorMessage: string;
 
-  constructor(
-    private authService: AuthService,
-    private store: Store<AppState>,
-    private router: Router,
-  ) { }
+  constructor(private authService: AuthService, private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.isLoading$ = this.store.pipe(select(selectLoading));
@@ -33,17 +29,14 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
-    this.errorMessage = null
-    this.authService.login(this.form.value)
-    .subscribe(data => {
+    this.errorMessage = null;
+    this.authService.login(this.form.value).subscribe((data) => {
       if (data.length > 0) {
         this.store.dispatch(login());
         this.router.navigate(['/home']);
       } else {
-        this.errorMessage = 'Username or Password not Valid'
+        this.errorMessage = 'Username or Password not Valid';
       }
-
     });
   }
-
 }

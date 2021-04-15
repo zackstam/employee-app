@@ -7,22 +7,16 @@ import { Store, select } from '@ngrx/store';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
+  constructor(private store: Store<AppState>, private router: Router) {}
 
-  constructor(
-    private store: Store<AppState>,
-    private router: Router,
-  ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.store.dispatch(logout());
     this.router.navigate(['/login']);
     localStorage.removeItem('user');
   }
-
 }

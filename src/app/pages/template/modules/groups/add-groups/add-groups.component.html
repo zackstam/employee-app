@@ -9,29 +9,48 @@
     <mat-card-content>
       <div class="alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
 
-      <form class="form" [formGroup]="form" (ngSubmit)="save()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="18px">
+      <form
+        class="form"
+        [formGroup]="form"
+        (ngSubmit)="save()"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+        fxLayoutGap="18px"
+      >
         <div formArrayName="groups" class="groups" fxLayout="column" fxLayoutAlign="start start">
-          <div fxLayout="row" fxLayoutAlign="start start" class="group" *ngFor="let groupForm of groupsForm.controls;let i = index "formGroupName="{{ i }}">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start start"
+            class="group"
+            *ngFor="let groupForm of groupsForm.controls; let i = index"
+            formGroupName="{{ i }}"
+          >
             <mat-form-field class="full-width">
               <mat-label>Name</mat-label>
-              <input formControlName="name" matInput placeholder="" value="">
+              <input formControlName="name" matInput placeholder="" value="" />
               <mat-error *ngIf="groupForm.get('name')?.hasError('required')">name required</mat-error>
             </mat-form-field>
             <div class="buttons" fxLayout="row" fxLayoutAlign="start start">
               <button type="button" *ngIf="i === 0" (click)="createGroup()" mat-mini-fab color="accent" aria-label="">
                 <span class="material-icons">add</span>
               </button>
-              <button  type="button" (click)="remove(i)" *ngIf="groupsForm.controls.length > 1 && i > 0" mat-mini-fab color="warn" aria-label="">
+              <button
+                type="button"
+                (click)="remove(i)"
+                *ngIf="groupsForm.controls.length > 1 && i > 0"
+                mat-mini-fab
+                color="warn"
+                aria-label=""
+              >
                 <span class="material-icons">delete</span>
               </button>
             </div>
-
           </div>
-
         </div>
 
-
-        <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">Save</button>
+        <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">
+          Save
+        </button>
       </form>
     </mat-card-content>
   </mat-card>

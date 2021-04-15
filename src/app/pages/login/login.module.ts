@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: LoginComponent,
   },
 ];
 
@@ -31,6 +31,6 @@ const routes: Routes = [
     MatInputModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-  ]
+  ],
 })
-export class LoginModule { }
+export class LoginModule {}

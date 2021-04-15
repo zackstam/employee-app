@@ -1,11 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/reducers/index';
 import { selectError, selectLoading } from '../../store/selectors/app.selector';
@@ -18,15 +12,21 @@ import { Observable, fromEvent } from 'rxjs';
   styleUrls: ['./template.component.scss'],
   animations: [
     trigger('openMenu', [
-      state('open', style({
-        width: '250px'
-      })),
-      state('closed', style({
-        width: '0px'
-      })),
+      state(
+        'open',
+        style({
+          width: '250px',
+        })
+      ),
+      state(
+        'closed',
+        style({
+          width: '0px',
+        })
+      ),
       transition('open => closed', animate('400ms ease-in-out')),
-      transition('closed => open', animate('400ms ease-in-out'))
-    ])
+      transition('closed => open', animate('400ms ease-in-out')),
+    ]),
   ],
 })
 export class TemplateComponent implements OnInit, AfterViewInit {
@@ -34,9 +34,7 @@ export class TemplateComponent implements OnInit, AfterViewInit {
   @ViewChild('menu', { static: false }) menu: ElementRef;
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
-  constructor(
-    private store: Store<AppState>,
-  ) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.error$ = this.store.pipe(select(selectError));
@@ -53,14 +51,10 @@ export class TemplateComponent implements OnInit, AfterViewInit {
 
   detectWindowChanges(): void {
     const windowResize = fromEvent(window, 'resize');
-    windowResize.pipe(
-      debounceTime(2000)
-    ).subscribe((windowElement: any) => {
+    windowResize.pipe(debounceTime(2000)).subscribe((windowElement: any) => {
       if (windowElement.target.innerWidth > 959) {
         this.isMenuOpen = false;
       }
     });
   }
-
-
 }

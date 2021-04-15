@@ -10,21 +10,17 @@ import { selectLoading } from '../../../../../store/selectors/app.selector';
 @Component({
   selector: 'app-add-groups',
   templateUrl: './add-groups.component.html',
-  styleUrls: ['./add-groups.component.scss']
+  styleUrls: ['./add-groups.component.scss'],
 })
 export class AddGroupsComponent implements OnInit {
   form: FormGroup;
   isLoading$: Observable<boolean>;
   errorMessage: string | null;
 
-  constructor(
-    private store: Store<AppState>,
-    private router: Router,
-    private groupService: GroupsService
-  ) { }
+  constructor(private store: Store<AppState>, private router: Router, private groupService: GroupsService) {}
 
   get groupsForm() {
-    return this.form.get("groups") as FormArray;
+    return this.form.get('groups') as FormArray;
   }
 
   ngOnInit(): void {
@@ -32,7 +28,7 @@ export class AddGroupsComponent implements OnInit {
     this.form = new FormGroup({
       groups: new FormArray([]),
     });
-    this.createGroup()
+    this.createGroup();
   }
 
   remove(i: number): void {
@@ -42,7 +38,7 @@ export class AddGroupsComponent implements OnInit {
   createGroup(): void {
     const control = new FormGroup({
       id: new FormControl(Date.now().toString()),
-      name: new FormControl(null, Validators.required)
+      name: new FormControl(null, Validators.required),
     });
     (<FormArray>this.form.get('groups')).push(control);
   }
@@ -50,11 +46,9 @@ export class AddGroupsComponent implements OnInit {
   save(): void {
     const groups = this.form.get('groups').value;
     for (const group of groups) {
-      this.groupService.add(group)
-      .subscribe(() => {
+      this.groupService.add(group).subscribe(() => {
         this.router.navigate(['/groups']);
       });
     }
   }
-
 }

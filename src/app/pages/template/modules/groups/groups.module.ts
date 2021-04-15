@@ -21,11 +21,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 const routes: Routes = [
   {
     path: '',
-    component: GroupsComponent
+    component: GroupsComponent,
   },
   {
     path: 'add',
-    component: AddGroupsComponent
+    component: AddGroupsComponent,
   },
 ];
 
@@ -47,10 +47,8 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatSortModule,
-    MatIconModule
+    MatIconModule,
   ],
-  entryComponents: [
-    EditGroupComponent
-  ]
+  entryComponents: [EditGroupComponent],
 })
-export class GroupsModule { }
+export class GroupsModule {}

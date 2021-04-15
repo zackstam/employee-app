@@ -1,8 +1,4 @@
-import {
-  Action,
-  createReducer,
-  on
-} from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as AuthActions from '../actions/app.actions';
 
 export interface State {
@@ -17,25 +13,24 @@ export const initialState: State = {
   authenticated: localStorage.getItem('user') ? true : false,
 };
 
-
 const appReducer = createReducer(
   initialState,
   on(AuthActions.setError, (state, payload: { error: string | null }) => ({
     ...state,
-    error: payload.error
+    error: payload.error,
   })),
   on(AuthActions.setLoading, (state, payload: { loading: boolean }) => ({
     ...state,
-    isLoading: payload.loading
+    isLoading: payload.loading,
   })),
-  on(AuthActions.login, state => ({
+  on(AuthActions.login, (state) => ({
     ...state,
-    authenticated: true
+    authenticated: true,
   })),
-  on(AuthActions.logout, state => ({
+  on(AuthActions.logout, (state) => ({
     ...state,
-    authenticated: false
-  })),
+    authenticated: false,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

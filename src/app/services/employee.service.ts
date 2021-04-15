@@ -7,23 +7,20 @@ import * as _ from 'lodash';
 import { ConfigPagination } from '../interfaces/config-pagination';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
-  private employeesUrl = 'api/employees/';  // URL to web api
+  private employeesUrl = 'api/employees/'; // URL to web api
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   all(config: ConfigPagination): Observable<any> {
-    const params = new HttpParams()
-    .set('page', config.pageIndex.toString())
-    .set('limit', config.limit.toString());
+    const params = new HttpParams().set('page', config.pageIndex.toString()).set('limit', config.limit.toString());
 
-    const start = (config.limit * config.pageIndex);
+    const start = config.limit * config.pageIndex;
     const end = start + config.limit;
 
-    return this.http.get<any>(this.employeesUrl)
-    .pipe(
+    return this.http.get<any>(this.employeesUrl).pipe(
       map((employees: Employee[]) => {
         const filteredEmployees = employees.filter((employee: any) => {
           let firstNameStatus = true;
@@ -40,46 +37,44 @@ export class EmployeeService {
             groupStatus = employee.group.toLowerCase().includes(group.toLowerCase()) ? true : false;
           }
           if (firstNameStatus && lastNameStatus && groupStatus) {
-            return employee
+            return employee;
           }
         });
         let orderedEmployees = filteredEmployees;
         const { field, order } = config.sort;
         if (field) {
-          orderedEmployees = order === 'asc' ?
-          _.orderBy( orderedEmployees, field ) :
-          _.orderBy( orderedEmployees, field ).reverse();
-        };
+          orderedEmployees =
+            order === 'asc' ? _.orderBy(orderedEmployees, field) : _.orderBy(orderedEmployees, field).reverse();
+        }
         return {
           length: orderedEmployees.length,
           pageIndex: config.pageIndex,
           limit: config.limit,
-          data: orderedEmployees.slice(start, end)
+          data: orderedEmployees.slice(start, end),
         };
-      }),
-    )
+      })
+    );
   }
 
   validateEmail(email: string): Observable<any> {
-    const params = new HttpParams()
-    .set('email', email)
-    return this.http.get<any[]>(this.employeesUrl, { params })
+    const params = new HttpParams().set('email', email);
+    return this.http.get<any[]>(this.employeesUrl, { params });
   }
 
   byId(id: string): Observable<Employee> {
-    return this.http.get<Employee>(this.employeesUrl + id)
+    return this.http.get<Employee>(this.employeesUrl + id);
   }
 
   add(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.employeesUrl, employee)
+    return this.http.post<Employee>(this.employeesUrl, employee);
   }
 
   update(employee: Employee): Observable<any> {
-    return this.http.put<Employee[]>(this.employeesUrl, employee)
+    return this.http.put<Employee[]>(this.employeesUrl, employee);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete<any>(this.employeesUrl + id)
+    return this.http.delete<any>(this.employeesUrl + id);
   }
 
   errorHandler(response: any): Observable<any> {

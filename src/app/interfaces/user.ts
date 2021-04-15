@@ -1,4 +1,3 @@
-
 export interface Address {
   street: string;
   suite: string;
@@ -27,5 +26,4 @@ export interface User {
   phone: string;
   website: string;
   company: Company;
-
 }

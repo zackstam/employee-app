@@ -7,36 +7,31 @@ import { Group } from '../../../../interfaces/group';
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  styleUrls: ['./groups.component.scss'],
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'action'];
   dataSource: Group[] = [];
 
-  constructor(
-    private groupService: GroupsService,
-    private dialog: MatDialog
-  ) { }
+  constructor(private groupService: GroupsService, private dialog: MatDialog) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.getGroup();
   }
 
   getGroup() {
-    this.groupService.all()
-    .subscribe((data: Group[]) => this.dataSource = data)
+    this.groupService.all().subscribe((data: Group[]) => (this.dataSource = data));
   }
 
   edit(group: any) {
     const dialogRef = this.dialog.open(EditGroupComponent, {
       width: '250px',
-      data: group
+      data: group,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getGroup();
       }
@@ -44,10 +39,6 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   }
 
   delete(group: any) {
-    this.groupService.delete(group.id)
-    .subscribe(() => this.getGroup())
+    this.groupService.delete(group.id).subscribe(() => this.getGroup());
   }
-
-
-
 }

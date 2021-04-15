@@ -7,12 +7,6 @@ export interface App {
   isLoading: boolean;
 }
 
-export const selectError = createSelector(
-  selectApp, (state: App) => state.error
-);
+export const selectError = createSelector(selectApp, (state: App) => state.error);
 
-export const selectLoading = createSelector(
-  selectApp, (state: App) => state.isLoading
-);
-
-
+export const selectLoading = createSelector(selectApp, (state: App) => state.isLoading);

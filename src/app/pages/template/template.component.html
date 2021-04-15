@@ -1,7 +1,14 @@
 <div class="header-container">
   <mat-toolbar color="primary" class="header">
-    <button fxHide.md fxHide.lg fxHide.xl (click)="toggleNav()" mat-icon-button class="example-icon"
-      aria-label="Example icon-button with menu icon">
+    <button
+      fxHide.md
+      fxHide.lg
+      fxHide.xl
+      (click)="toggleNav()"
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
       <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
     <span>Employee Management</span>
@@ -11,25 +18,37 @@
   <app-nav></app-nav>
 </div>
 <div class="content-container" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="18px">
-  <div *ngIf="(isLoading$ | async)" class="spinner-container" fxLayout="row" fxLayoutAlign="center center">
+  <div *ngIf="isLoading$ | async" class="spinner-container" fxLayout="row" fxLayoutAlign="center center">
     <mat-spinner></mat-spinner>
   </div>
-  <div fxHide.sm fxHide.xs class="content-container__menu" fxFlex.xs="0%" fxFlex.sm="0%" fxFlex.md="20%" fxFlex.lg="15%"
-    fxFlex.xl="15%">
+  <div
+    fxHide.sm
+    fxHide.xs
+    class="content-container__menu"
+    fxFlex.xs="0%"
+    fxFlex.sm="0%"
+    fxFlex.md="20%"
+    fxFlex.lg="15%"
+    fxFlex.xl="15%"
+  >
     <app-nav></app-nav>
   </div>
-  <div class="content-container__content" fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="75%" fxFlex.lg="80%"
-    fxFlex.xl="80%">
-
+  <div
+    class="content-container__content"
+    fxFlex.xs="100%"
+    fxFlex.sm="100%"
+    fxFlex.md="75%"
+    fxFlex.lg="80%"
+    fxFlex.xl="80%"
+  >
     <mat-card>
       <mat-card-content>
-        <div class="alert alert-danger" role="alert" *ngIf="(error$ | async)">
+        <div class="alert alert-danger" role="alert" *ngIf="error$ | async">
           {{ error$ | async }}
         </div>
 
         <router-outlet></router-outlet>
       </mat-card-content>
     </mat-card>
-
   </div>
 </div>

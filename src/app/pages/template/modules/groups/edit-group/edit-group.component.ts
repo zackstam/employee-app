@@ -10,7 +10,7 @@ import { selectLoading } from '../../../../../store/selectors/app.selector';
 @Component({
   selector: 'app-edit-group',
   templateUrl: './edit-group.component.html',
-  styleUrls: ['./edit-group.component.scss']
+  styleUrls: ['./edit-group.component.scss'],
 })
 export class EditGroupComponent implements OnInit {
   form: FormGroup;
@@ -19,15 +19,15 @@ export class EditGroupComponent implements OnInit {
     public dialogRef: MatDialogRef<EditGroupComponent>,
     private groupService: GroupsService,
     private store: Store<AppState>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit(): void {
     this.isLoading$ = this.store.pipe(select(selectLoading));
     this.form = new FormGroup({
       id: new FormControl(this.data.id, Validators.required),
-      name: new FormControl(this.data.name, Validators.required)
+      name: new FormControl(this.data.name, Validators.required),
     });
-
   }
 
   cancel() {
@@ -36,10 +36,8 @@ export class EditGroupComponent implements OnInit {
 
   save() {
     const form = this.form.value;
-    this.groupService.update(form)
-    .subscribe(() => {
+    this.groupService.update(form).subscribe(() => {
       this.dialogRef.close(true);
-    })
+    });
   }
-
 }

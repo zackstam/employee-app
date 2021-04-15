@@ -5,11 +5,8 @@ import { GroupsService } from '../services/group.service';
 
 @Injectable()
 export class GroupResolver implements Resolve<any> {
-
-  constructor(
-    private groupService: GroupsService
-  ) { }
-  resolve(): Observable<any>|Promise<any>|any {
+  constructor(private groupService: GroupsService) {}
+  resolve(): Observable<any> | Promise<any> | any {
     return this.groupService.all();
   }
 }

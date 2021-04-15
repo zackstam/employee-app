@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss']
+  styleUrls: ['./employees.component.scss'],
 })
 export class EmployeeComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'birthDate', 'action'];
@@ -33,7 +33,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private groupService: GroupsService,
     private dialog: MatDialog,
-    private router: Router,
+    private router: Router
   ) {
     this.searchForm = this.fb.group({
       firstName: [null, Validators.required],
@@ -43,10 +43,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.groupService.all()
-      .subscribe((data: Group[]) => this.groups = data)
+    this.groupService.all().subscribe((data: Group[]) => (this.groups = data));
   }
-
 
   ngAfterViewInit(): void {
     merge(this.sort.sortChange, this.paginator.page)
@@ -55,7 +53,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
         tap(() => {
           this.getEmployees();
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   getEmployees(): void {
@@ -65,21 +64,20 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       search: this.searchForm.value,
       sort: {
         field: this.sort.active ? this.sort.active : null,
-        order: this.sort.direction
-      }
+        order: this.sort.direction,
+      },
     };
 
-    this.employeeService.all(config)
-      .subscribe((response: ResponsePagination) => {
-        this.paginator.length = response.length;
-        this.dataSource = response.data;
-      })
+    this.employeeService.all(config).subscribe((response: ResponsePagination) => {
+      this.paginator.length = response.length;
+      this.dataSource = response.data;
+    });
   }
 
   detail(employee: Employee): void {
     const dialogRef = this.dialog.open(DetailEmployeeComponent, {
       data: employee,
-      disableClose: true
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe();
@@ -87,7 +85,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
 
   search(): void {
     this.paginator.pageIndex = 0;
-    this.getEmployees()
+    this.getEmployees();
   }
 
   edit(employee: Employee): void {
@@ -100,11 +98,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
   delete(employee: Employee): void {
-    this.employeeService.delete(employee.id)
-    .subscribe(() => this.getEmployees());
+    this.employeeService.delete(employee.id).subscribe(() => this.getEmployees());
   }
-
-
-
-
 }

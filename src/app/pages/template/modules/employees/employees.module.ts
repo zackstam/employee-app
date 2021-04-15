@@ -31,7 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
 const routes: Routes = [
   {
     path: '',
-    component: EmployeeComponent
+    component: EmployeeComponent,
   },
   {
     path: 'add',
@@ -80,11 +80,9 @@ const routes: Routes = [
     EmployeeIdResolver,
     GroupResolver,
     MatDatepickerModule,
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    { provide: DEFAULT_CURRENCY_CODE, useValue: 'Rp' }
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'Rp' },
   ],
-  entryComponents: [
-    DetailEmployeeComponent
-  ]
+  entryComponents: [DetailEmployeeComponent],
 })
-export class EmployeesModule { }
+export class EmployeesModule {}

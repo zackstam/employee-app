@@ -10,33 +10,32 @@
       <form class="form" [formGroup]="form" (ngSubmit)="save()">
         <mat-form-field class="full-width">
           <mat-label>Username</mat-label>
-          <input formControlName="username" matInput placeholder="" value="">
+          <input formControlName="username" matInput placeholder="" value="" />
           <mat-error *ngIf="form.get('username')?.hasError('required')">username required</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label>First Name</mat-label>
-          <input formControlName="firstName" matInput placeholder="" value="">
+          <input formControlName="firstName" matInput placeholder="" value="" />
           <mat-error *ngIf="form.get('firstName')?.hasError('required')">First Name required</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label>Last Name</mat-label>
-          <input formControlName="lastName" matInput placeholder="" value="">
+          <input formControlName="lastName" matInput placeholder="" value="" />
           <mat-error *ngIf="form.get('lastName')?.hasError('required')">Last Name required</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label>Email</mat-label>
-          <input type="email" formControlName="email" matInput placeholder="" value="">
+          <input type="email" formControlName="email" matInput placeholder="" value="" />
           <mat-error *ngIf="form.get('email')?.hasError('required')">Email required</mat-error>
           <mat-error *ngIf="form.get('email')?.hasError('pattern')">Format email not correct</mat-error>
         </mat-form-field>
 
-
         <mat-form-field appearance="fill">
           <mat-label>BirthDate</mat-label>
-          <input formControlName="birthDate" [max]="max" matInput [matDatepicker]="picker">
+          <input formControlName="birthDate" [max]="max" matInput [matDatepicker]="picker" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="form.get('birthDate')?.hasError('required')">BirthDate required</mat-error>
@@ -44,21 +43,24 @@
 
         <mat-form-field class="full-width">
           <mat-label>Basic Salary</mat-label>
-          <input type="number" formControlName="basicSalary" matInput placeholder="" value="">
+          <input type="number" formControlName="basicSalary" matInput placeholder="" value="" />
           <mat-error *ngIf="form.get('basicSalary')?.hasError('required')">Basic Salary required</mat-error>
-          <!-- <mat-error *ngIf="form.get('basicSalary')?.hasError('pattern')">First digit for 0 is forbidden</mat-error> -->
+          <mat-error *ngIf="form.get('basicSalary')?.hasError('pattern')">First digit for 0 is forbidden</mat-error>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Group</mat-label>
-          <input formControlName="group" type="text"
-                 placeholder="Pick one"
-                 aria-label="Group"
-                 matInput
-                 [matAutocomplete]="auto">
+          <input
+            formControlName="group"
+            type="text"
+            placeholder="Pick one"
+            aria-label="Group"
+            matInput
+            [matAutocomplete]="auto"
+          />
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option *ngFor="let group of options" [value]="group.name">
-              {{group.name}}
+              {{ group.name }}
             </mat-option>
           </mat-autocomplete>
           <mat-error *ngIf="form.get('group')?.hasError('required')">Group required</mat-error>
@@ -66,7 +68,13 @@
 
         <div class="full-width" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="18px">
           <label id="example-radio-group-label">Pick your status</label>
-          <mat-radio-group formControlName="status" aria-label="Select an option" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="18px">
+          <mat-radio-group
+            formControlName="status"
+            aria-label="Select an option"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+            fxLayoutGap="18px"
+          >
             <mat-radio-button value="single">Single</mat-radio-button>
             <mat-radio-button value="married">Married</mat-radio-button>
             <mat-radio-button value="divorced">Divorced</mat-radio-button>
@@ -80,7 +88,9 @@
           <mat-error *ngIf="form.get('description')?.hasError('required')">Description required</mat-error>
         </mat-form-field>
         <div class="buttons">
-          <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">Save</button>
+          <button [disabled]="!form.valid || (isLoading$ | async)" mat-flat-button type="submit" color="primary">
+            Save
+          </button>
           <a mat-button [routerLink]="['/employees']">Cancel</a>
         </div>
       </form>

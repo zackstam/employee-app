@@ -9,7 +9,6 @@ export interface Search {
   group: string;
 }
 
-
 export interface ConfigPagination {
   pageIndex: number;
   limit: number;
